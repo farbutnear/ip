@@ -21,6 +21,15 @@ public class Task {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public Boolean getIsDone() {
+        return this.isDone;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
@@ -41,6 +50,11 @@ public class Task {
             super(description);
             this.day = day;
         }
+
+        public String getDay() {
+            return this.day;
+        }
+
         @Override
         public String toString() {
             return "[D]" + super.toString() + " (by: " + day + ")";
@@ -55,9 +69,18 @@ public class Task {
             this.start = start;
             this.end = end;
         }
+
+        public String getStart() {
+            return this.start;
+        }
+
+        public String getEnd() {
+            return this.end;
+        }
+
         @Override
         public String toString() {
-            return "[E]" + super.toString() + " (from: " + start + "to: " + end + ")";
+            return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
         }
     }
 }
