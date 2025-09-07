@@ -23,6 +23,19 @@ class InvalidIndexException extends FarquaadException {
     }
 }
 
+class InvalidDateFormatException extends FarquaadException {
+    InvalidDateFormatException(String command) {
+        super("oi provide a valid date format for " + command + ". " +
+                "Examples: 2024-12-25, 25/12/2024, Dec 25 2024");
+    }
+}
+
+class MissingDateTimeException extends FarquaadException {
+    MissingDateTimeException(String command) {
+        super("can you provide the required date/time information for " + command + "...");
+    }
+}
+
 public class Farquaad {
     static ArrayList<Task> tasks = new ArrayList<>();
     static final String FILE_NAME = "data/farquaad.txt";
@@ -68,6 +81,7 @@ public class Farquaad {
             int taskNo = Integer.parseInt(input.split(" ")[1]) - 1;
 
             tasks.get(taskNo).markAsDone();
+            System.out.println("Ok, solid bird bird, marked this as done:");
             System.out.println(tasks.get(taskNo));
             savefunction.save(tasks);
         } else if (input.startsWith("unmark")) {
@@ -92,8 +106,17 @@ public class Farquaad {
                 String work = (input.length() > 8) ? input.substring(8).trim() : "";
 
                 if (work.isEmpty()) throw new EmptyDescriptionException("deadline");
-                String[] splits = work.split(" /by ");
-                Task deadline = new Task.Deadline(splits[0], splits[1]);
+
+                if (!work.contains(" /by ")) {
+                    throw new MissingDateTimeException("use: deadline <description> /by <date>");
+                }
+
+                String[] splits = work.split(" /by ", 2);
+                if (splits.length != 2 || splits[0].trim().isEmpty() || splits[1].trim().isEmpty()) {
+                    throw new MissingDateTimeException("deadline");
+                }
+
+                Task deadline = new Task.Deadline(splits[0].trim(), splits[1].trim());
 
                 tasks.add(deadline);
                 System.out.println("Got it. I've added this task: ");
@@ -104,9 +127,22 @@ public class Farquaad {
                 String work = (input.length() > 5) ? input.substring(5).trim() : "";
 
                 if (work.isEmpty()) throw new EmptyDescriptionException("event");
-                String[] firstSplit = work.split(" /from ");
+
+                if (!work.contains(" /from ") || !work.contains(" /to ")) {
+                    throw new MissingDateTimeException("use: event <description> /from <start> /to <end>");
+                }
+
+                String[] firstSplit = work.split(" /from ", 2);
+                if (firstSplit.length != 2 || firstSplit[0].trim().isEmpty()) {
+                    throw new MissingDateTimeException("event");
+                }
+
                 String[] secondSplit = firstSplit[1].split(" /to ");
-                Task event = new Task.Event(firstSplit[0], secondSplit[0], secondSplit[1]);
+                if (secondSplit.length != 2 || secondSplit[0].trim().isEmpty() || secondSplit[1].trim().isEmpty()) {
+                    throw new MissingDateTimeException("event");
+                }
+
+                Task event = new Task.Event(firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
 
                 tasks.add(event);
                 System.out.println("Got it. I've added this task:");

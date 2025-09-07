@@ -69,12 +69,12 @@ public class SaveFunction {
                     writer.write(String.join(" | ", "T", done, td.getDescription()));
                 } else if (t instanceof Task.Deadline) {
                     Task.Deadline d = (Task.Deadline) t;
-                    writer.write(String.join(" | ", "D", done, d.getDescription(), d.getDay()));
+                    writer.write(String.join(" | ", "D", done, d.getDescription(), d.getOriginalDay()));
                 } else if (t instanceof Task.Event) {
                     Task.Event e = (Task.Event) t;
                     writer.write(
                             String.join(" | ", "E",
-                                    done, e.getDescription(), e.getStart(), e.getEnd()));
+                                    done, e.getDescription(), e.getOriginalStart(), e.getOriginalEnd()));
                 }
                 writer.newLine();
             }
