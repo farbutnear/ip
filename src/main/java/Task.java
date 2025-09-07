@@ -1,3 +1,8 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -9,7 +14,6 @@ public class Task {
 
     public void markAsDone() {
         this.isDone = true;
-        System.out.println("Nice! I've marked this task as done:");
     }
 
     public void unmarkAsNotDone() {
@@ -18,7 +22,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
     public Boolean getIsDone() {
@@ -45,42 +49,114 @@ public class Task {
     }
 
     static class Deadline extends Task {
-        private String day;
+        private LocalDate day;
+        private String originalDay;
+
         public Deadline(String description, String day) {
             super(description);
-            this.day = day;
+            this.originalDay = day;
+            this.day = parseDate(day);
         }
 
+        private LocalDate parseDate(String day) {
+            DateTimeFormatter[] formatters = {
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+                    DateTimeFormatter.ofPattern("d/M/yyyy"),
+                    DateTimeFormatter.ofPattern("d MMM yyyy"),
+                    DateTimeFormatter.ofPattern(("MMM d yyyy"))
+            };
+
+            for (DateTimeFormatter formatter : formatters) {
+                try {
+                    return LocalDate.parse(day.trim(), formatter);
+                } catch (DateTimeParseException e) {
+                }
+            }
+
+            return null;
+        }
         public String getDay() {
-            return this.day;
+            if (day != null) {
+                return day.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+            } else {
+                return originalDay;
+            }
+        }
+
+        public String getOriginalDay() {
+            return originalDay;
         }
 
         @Override
         public String toString() {
-            return "[D]" + super.toString() + " (by: " + day + ")";
+            return "[D]" + super.toString() + " (by: " + getDay() + ")";
         }
     }
 
     static class Event extends Task {
-        private String start;
-        private String end;
+        private LocalDateTime start;
+        private LocalDateTime end;
+        private String originalStart;
+        private String originalEnd;
+
         public Event(String description, String start, String end) {
             super(description);
-            this.start = start;
-            this.end = end;
+            this.originalStart = start;
+            this.originalEnd = end;
+            this.start = parseDateTime(start);
+            this.end = parseDateTime(end);
+        }
+
+        private LocalDateTime parseDateTime(String dateTimeString) {
+            // Try multiple datetime formats
+            DateTimeFormatter[] formatters = {
+                    DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
+                    DateTimeFormatter.ofPattern("d/M/yyyy HH:mm a"),
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm a"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a")
+            };
+
+            for (DateTimeFormatter formatter : formatters) {
+                try {
+                    return LocalDateTime.parse(dateTimeString.trim(), formatter);
+                } catch (DateTimeParseException e) {
+                    // Try next formatter
+                }
+            }
+
+            return null;
         }
 
         public String getStart() {
-            return this.start;
+            if (start != null) {
+                return start.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"));
+            } else {
+                return originalStart;
+            }
         }
 
         public String getEnd() {
-            return this.end;
+            if (end != null) {
+                return end.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"));
+            } else {
+                return originalEnd;
+            }
+        }
+
+        public String getOriginalStart() {
+            return originalStart;
+        }
+
+        public String getOriginalEnd() {
+            return originalEnd;
         }
 
         @Override
         public String toString() {
-            return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
+            return "[E]" + super.toString() + " (from: " + getStart() + " to: " + getEnd() + ")";
         }
     }
 }

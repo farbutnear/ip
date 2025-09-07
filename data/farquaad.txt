@@ -1,3 +1,9 @@
 T | 1 | read
 D | 0 | return book | 2019-10-15
 E | 0 | proj | Mon 2pm | Mon 4pm
+D | 0 | submit report | 2024-12-25
+D | 0 | buy groceries | 25/12/2024
+D | 0 | pay bills | Dec 25 2024
+E | 0 | team meeting | 2024-12-25 1400 | 2024-12-25 1600
+E | 0 | party | 25/12/2024 1930 | 25/12/2024 2300
+D | 0 | test | tomorrow
