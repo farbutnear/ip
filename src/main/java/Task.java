@@ -18,7 +18,6 @@ public class Task {
 
     public void unmarkAsNotDone() {
         this.isDone = false;
-        System.out.println("OK, I've marked this task as not done yet:");
     }
 
     public String getStatusIcon() {
