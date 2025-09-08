@@ -1,3 +1,5 @@
+package farquaad.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -37,7 +39,7 @@ public class Task {
         return "[" + getStatusIcon() + "] " + description;
     }
 
-    static class ToDo extends Task {
+    public static class ToDo extends Task {
         public ToDo(String description) {
             super(description);
         }
@@ -47,7 +49,7 @@ public class Task {
         }
     }
 
-    static class Deadline extends Task {
+    public static class Deadline extends Task {
         private LocalDate day;
         private String originalDay;
 
@@ -93,7 +95,7 @@ public class Task {
         }
     }
 
-    static class Event extends Task {
+    public static class Event extends Task {
         private LocalDateTime start;
         private LocalDateTime end;
         private String originalStart;

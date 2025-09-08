@@ -1,3 +1,7 @@
+package farquaad.ui;
+
+import farquaad.TaskList;
+import farquaad.task.Task;
 import java.util.Scanner;
 
 public class Ui {
@@ -29,24 +33,24 @@ public class Ui {
     }
 
     public void displayTaskAdded(Task task, int totalTasks) {
-        System.out.println("Got it. I've added this task: ");
+        System.out.println("Got it. I've added this farquaad.task: ");
         System.out.println("  " + task);
         System.out.println("Now you have " + totalTasks + " tasks in the list.");
     }
 
     public void displayTaskDeleted(Task task, int totalTasks) {
-        System.out.println("Noted. I've removed this task:");
+        System.out.println("Noted. I've removed this farquaad.task:");
         System.out.println("  " + task);
         System.out.println("Now you have " + totalTasks + " tasks in the list.");
     }
 
     public void displayTaskMarked(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("Nice! I've marked this farquaad.task as done:");
         System.out.println("  " + task);
     }
 
     public void displayTaskUnmarked(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println("OK, I've marked this farquaad.task as not done yet:");
         System.out.println("  " + task);
     }
 
