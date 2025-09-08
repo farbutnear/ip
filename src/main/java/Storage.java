@@ -7,10 +7,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SaveFunction {
+public class Storage {
     private final Path file;
 
-    public SaveFunction(String filePath) {
+    public Storage(String filePath) {
         this.file = Paths.get(filePath);
     }
 
