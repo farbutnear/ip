@@ -1,4 +1,7 @@
+package farquaad;
+
 import java.util.ArrayList;
+import farquaad.task.Task;
 
 public class TaskList {
     private ArrayList<Task> tasks;

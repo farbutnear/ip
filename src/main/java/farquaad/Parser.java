@@ -1,3 +1,9 @@
+package farquaad;
+
+import farquaad.command.*;
+import farquaad.farquaadexception.*;
+import farquaad.farquaadexception.UnknownCommandException;
+
 public class Parser {
     public static Command parse(String input) throws FarquaadException {
         if (input.isEmpty()) {
@@ -20,7 +26,7 @@ public class Parser {
             case "unmark":
                 return new UnmarkCommand(remaining);
             case "todo":
-                return new TodoCommand(remaining);
+                return new ToDoCommand(remaining);
             case "deadline":
                 return new DeadlineCommand(remaining);
             case "event":
