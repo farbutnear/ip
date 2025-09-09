@@ -59,6 +59,10 @@ public class Task {
             this.day = parseDate(day);
         }
 
+        public LocalDate getParsedDate() {
+            return this.day;
+        }
+
         private LocalDate parseDate(String day) {
             DateTimeFormatter[] formatters = {
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
