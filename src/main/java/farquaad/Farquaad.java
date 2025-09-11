@@ -1,16 +1,27 @@
 package farquaad;
 
 import java.io.IOException;
-import farquaad.command.*;
+
+import farquaad.command.Command;
 import farquaad.storage.Storage;
 import farquaad.ui.Ui;
 import farquaad.farquaadexception.FarquaadException;
 
+/**
+ * The main entry point of the Farquaad program.
+ * Initializes the storage, task list, and UI components,
+ * and starts the program execution loop.
+ */
 public class Farquaad {
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
+    /**
+     * Creates a new {@code Farquaad} instance using the given save file path.
+     *
+     * @param filePath Path to the file used for saving and loading tasks.
+     */
     public Farquaad(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -26,6 +37,10 @@ public class Farquaad {
         new Farquaad("data/farquaad.txt").run();
     }
 
+    /**
+     * Starts the main execution loop of the program.
+     * Reads user input, parses it into commands, and executes them until exit.
+     */
     public void run() {
         ui.displayWelcome();
 
@@ -39,7 +54,8 @@ public class Farquaad {
             } catch (FarquaadException e) {
                 ui.displayError(e.getMessage());
             } catch (IOException e) {
-                ui.displayError("Cannot save file! " + e.getMessage());
+                ui.displayError("Cannot save file! "
+                        + e.getMessage());
             }
         }
     }

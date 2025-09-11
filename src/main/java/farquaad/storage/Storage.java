@@ -8,11 +8,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 import farquaad.task.Task;
 
+/**
+ * Handles loading and saving of tasks to a save file.
+ */
 public class Storage {
     private final Path file;
 
+    /**
+     * Creates a {@code Storage} object with the specified file path.
+     *
+     * @param filePath Path to the file used for saving and loading tasks.
+     */
     public Storage(String filePath) {
         this.file = Paths.get(filePath);
     }
@@ -27,6 +36,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the file at {@code filePath}.
+     *
+     * @return A {@code TaskList} containing the tasks loaded from the file.
+     * @throws IOException If an error occurs while reading the file.
+     */
     public ArrayList<Task> load() throws IOException {
         checkFileExists();
         List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
@@ -62,6 +77,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the given task list to the file at {@code filePath}.
+     *
+     * @param tasks The {@code TaskList} to be saved.
+     * @throws IOException If an error occurs while writing to the file.
+     */
+
     public void save(List<Task> tasks) throws IOException {
         checkFileExists();
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
@@ -72,12 +94,14 @@ public class Storage {
                     writer.write(String.join(" | ", "T", done, td.getDescription()));
                 } else if (t instanceof Task.Deadline) {
                     Task.Deadline d = (Task.Deadline) t;
-                    writer.write(String.join(" | ", "D", done, d.getDescription(), d.getOriginalDay()));
+                    writer.write(String.join(" | ",
+                            "D", done, d.getDescription(), d.getOriginalDay()));
                 } else if (t instanceof Task.Event) {
                     Task.Event e = (Task.Event) t;
                     writer.write(
-                            String.join(" | ", "E",
-                                    done, e.getDescription(), e.getOriginalStart(), e.getOriginalEnd()));
+                            String.join(" | ",
+                                    "E", done, e.getDescription(),
+                                    e.getOriginalStart(), e.getOriginalEnd()));
                 }
                 writer.newLine();
             }
