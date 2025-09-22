@@ -17,6 +17,7 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException {
+        assert arguments != null : "Delete arguments should not be null";
         if (arguments.trim().isEmpty()) {
             throw new EmptyDescriptionException("delete");
         }
@@ -24,6 +25,7 @@ public class DeleteCommand extends Command {
         int taskNo;
         try {
             taskNo = Integer.parseInt(arguments.trim()) - 1;
+            assert tasks.isValidIndex(taskNo) : "Index should be valid";
         } catch (NumberFormatException e) {
             throw new InvalidIndexException();
         }

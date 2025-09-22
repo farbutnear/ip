@@ -29,9 +29,12 @@ public class Parser {
         if (input.isEmpty()) {
             throw new UnknownCommandException();
         }
+        assert input != null : "Input string should not be null";
 
         String[] parts = input.split(" ", 2);
+        assert parts.length > 0 : "Parsed words should contain at least the command word";
         String commandWord = parts[0].toLowerCase();
+        assert !commandWord.isEmpty() : "Command word should not be empty";
         String remaining = parts.length > 1 ? parts[1] : "";
 
         switch (commandWord) {
