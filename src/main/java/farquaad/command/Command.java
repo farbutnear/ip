@@ -19,7 +19,7 @@ public abstract class Command {
      * @param storage The storage object used for saving/loading tasks.
      * @throws Exception If the command cannot be executed successfully.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage)
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException;
 
     /**

@@ -15,7 +15,7 @@ public class EventCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException {
         if (arguments.trim().isEmpty()) {
             throw new EmptyDescriptionException("event");
@@ -37,7 +37,7 @@ public class EventCommand extends Command {
 
         Task event = new Task.Event(firstSplit[0].trim(), secondSplit[0].trim(), secondSplit[1].trim());
         tasks.add(event);
-        ui.displayTaskAdded(event, tasks.size());
         storage.save(tasks.getTasks());
+        return ui.displayTaskAdded(event, tasks.size());
     }
 }

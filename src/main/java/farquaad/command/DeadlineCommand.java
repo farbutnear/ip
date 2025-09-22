@@ -15,7 +15,7 @@ public class DeadlineCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException {
         if (arguments.trim().isEmpty()) {
             throw new EmptyDescriptionException("deadline");
@@ -32,7 +32,7 @@ public class DeadlineCommand extends Command {
 
         Task deadline = new Task.Deadline(splits[0].trim(), splits[1].trim());
         tasks.add(deadline);
-        ui.displayTaskAdded(deadline, tasks.size());
         storage.save(tasks.getTasks());
+        return ui.displayTaskAdded(deadline, tasks.size());
     }
 }

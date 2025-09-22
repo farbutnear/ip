@@ -15,7 +15,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException {
         if (arguments.trim().isEmpty()) {
             throw new EmptyDescriptionException("delete");
@@ -33,7 +33,7 @@ public class DeleteCommand extends Command {
         }
 
         Task removed = tasks.remove(taskNo);
-        ui.displayTaskDeleted(removed, tasks.size());
         storage.save(tasks.getTasks());
+        return ui.displayTaskDeleted(removed, tasks.size());
     }
 }

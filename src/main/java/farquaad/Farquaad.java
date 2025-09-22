@@ -14,7 +14,7 @@ import farquaad.farquaadexception.FarquaadException;
  */
 public class Farquaad {
     private final Storage storage;
-    private final TaskList tasks;
+    private TaskList tasks;
     private final Ui ui;
 
     /**
@@ -57,6 +57,20 @@ public class Farquaad {
                 ui.displayError("Cannot save file! "
                         + e.getMessage());
             }
+        }
+    }
+
+    /**
+     * Returns the chatbot's response to the given input string.
+     */
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(tasks, ui, storage);
+        } catch (FarquaadException e) {
+            return e.getMessage();
+        } catch (IOException e) {
+            return "File error: " + e.getMessage();
         }
     }
 }
