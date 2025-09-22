@@ -33,7 +33,9 @@ public class TaskList {
      * @param task The task to add.
      */
     public void add(Task task) {
+        int initialSize = tasks.size();
         tasks.add(task);
+        assert tasks.size() == initialSize + 1 : "Task list size should increase after adding";
     }
 
     /**
@@ -53,7 +55,11 @@ public class TaskList {
      * @return The task at the specified index.
      */
     public Task get(int index) {
-        return tasks.get(index);
+        assert index >= 0 && index < tasks.size() : "Index out of bounds";
+        int initialSize = tasks.size();
+        Task removed = tasks.remove(index);
+        assert tasks.size() == initialSize - 1 : "Task list size should decrease after removing";
+        return removed;
     }
 
     /**
