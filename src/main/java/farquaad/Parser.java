@@ -1,15 +1,6 @@
 package farquaad;
 
-import farquaad.command.Command;
-import farquaad.command.DeadlineCommand;
-import farquaad.command.DeleteCommand;
-import farquaad.command.EventCommand;
-import farquaad.command.ExitCommand;
-import farquaad.command.ListCommand;
-import farquaad.command.MarkCommand;
-import farquaad.command.ToDoCommand;
-import farquaad.command.UnmarkCommand;
-import farquaad.command.FindCommand;
+import farquaad.command.*;
 import farquaad.farquaadexception.FarquaadException;
 import farquaad.farquaadexception.UnknownCommandException;
 
@@ -56,6 +47,8 @@ public class Parser {
             return new DeadlineCommand(remaining);
         case "event":
             return new EventCommand(remaining);
+        case "remind":
+            return new RemindCommand();
         default:
             throw new UnknownCommandException();
         }

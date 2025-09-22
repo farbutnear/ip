@@ -98,72 +98,27 @@ public class Task {
      * Represents a task with a deadline.
      */
     public static class Deadline extends Task {
-        private LocalDate day;
-        private String originalDay;
+        private final LocalDate by;
+        private final String originalInput; // optional, if you want to show exactly what user typed
 
-        /**
-         * Creates a new Deadline task.
-         *
-         * @param description Description of the task.
-         * @param day The deadline date in string format.
-         */
-        public Deadline(String description, String day) {
+        public Deadline(String description, String isoBy) {
             super(description);
-            this.originalDay = day;
-            this.day = parseDate(day);
+            this.by = LocalDate.parse(isoBy);   // always ISO string
+            this.originalInput = isoBy;         // keep ISO for saving
         }
 
-        /**
-         * Returns the parsed date of the deadline, if available.
-         *
-         * @return The parsed {@code LocalDate}, or {@code null} if parsing failed.
-         */
-        public LocalDate getParsedDate() {
-            return this.day;
+        /** ISO string for logic + storage */
+        public String getIsoDay() {
+            return by.toString();   // yyyy-MM-dd
         }
 
-        private LocalDate parseDate(String day) {
-            DateTimeFormatter[] formatters = {
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-                    DateTimeFormatter.ofPattern("d/M/yyyy"),
-                    DateTimeFormatter.ofPattern("d MMM yyyy"),
-                    DateTimeFormatter.ofPattern(("MMM d yyyy"))
-            };
-
-            for (DateTimeFormatter formatter : formatters) {
-                try {
-                    return LocalDate.parse(day.trim(), formatter);
-                } catch (DateTimeParseException e) {
-                    // Try next formatter
-                }
-            }
-
-            return null;
-        }
-
-        /**
-         * Returns the deadline date in a user-friendly format.
-         *
-         * @return The formatted deadline date, or the original string if parsing failed.
-         */
-        public String getDay() {
-            if (day != null) {
-                return day.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
-            } else {
-                return originalDay;
-            }
-        }
-
-        public String getOriginalDay() {
-            return originalDay;
-        }
-
-        @Override
+        /** Used for display (pretty string) */
         public String toString() {
-            return "[D]" + super.toString() + " (by: " + getDay() + ")";
+            String pretty = by.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
+            return "[D]" + super.toString() + " (by: " + pretty + ")";
         }
     }
+
 
     /**
      * Represents a task with a start and end time (event).

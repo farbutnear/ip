@@ -56,10 +56,7 @@ public class TaskList {
      */
     public Task get(int index) {
         assert index >= 0 && index < tasks.size() : "Index out of bounds";
-        int initialSize = tasks.size();
-        Task removed = tasks.remove(index);
-        assert tasks.size() == initialSize - 1 : "Task list size should decrease after removing";
-        return removed;
+        return tasks.get(index);
     }
 
     /**

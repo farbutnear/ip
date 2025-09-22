@@ -1,9 +1,13 @@
 package farquaad;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import farquaad.command.Command;
 import farquaad.storage.Storage;
+import farquaad.task.Task;
 import farquaad.ui.Ui;
 import farquaad.farquaadexception.FarquaadException;
 
@@ -44,6 +48,11 @@ public class Farquaad {
     public void run() {
         ui.displayWelcome();
 
+        String startupReminders = getStartupRemindersMessage();
+        if (!startupReminders.isEmpty()) {
+            ui.displayMessage(startupReminders);
+        }
+
         boolean isExit = false;
         while (!isExit) {
             try {
@@ -71,6 +80,52 @@ public class Farquaad {
             return e.getMessage();
         } catch (IOException e) {
             return "File error: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Returns the welcome message (and prints it via Ui).
+     */
+    public String getWelcomeMessage() {
+        return ui.displayWelcome();
+    }
+
+    /**
+     * Builds and returns startup reminders (<= 3 days ahead).
+     * Returns "" if there are no upcoming deadlines.
+     */
+    public String getStartupRemindersMessage() {
+        return buildUpcomingDeadlinesMessage(3);
+    }
+
+    private String buildUpcomingDeadlinesMessage(int daysAhead) {
+        LocalDate today = LocalDate.now();
+        LocalDate limit = today.plusDays(daysAhead);
+
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+
+        for (Task t : tasks.getTasks()) {
+            if (t instanceof Task.Deadline) {
+                LocalDate due = parseDate(((Task.Deadline) t).getIsoDay());
+                if (due != null && !due.isBefore(today) && !due.isAfter(limit)) {
+                    if (count == 0) {
+                        sb.append("Here are your upcoming deadlines (next ")
+                                .append(daysAhead).append(" days):\n");
+                    }
+                    count++;
+                    sb.append(count).append(". ").append(t).append("\n");
+                }
+            }
+        }
+        return count == 0 ? "" : sb.toString().trim();
+    }
+
+    private static LocalDate parseDate(String s) {
+        try {
+            return LocalDate.parse(s, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (DateTimeParseException e) {
+            return null;
         }
     }
 }
