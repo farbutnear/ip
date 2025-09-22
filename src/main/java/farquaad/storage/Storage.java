@@ -74,6 +74,7 @@ public class Storage {
                     break;
             }
         }
+        assert tasks != null : "task list should not be null";
         return tasks;
     }
 
