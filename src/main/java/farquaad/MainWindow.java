@@ -33,6 +33,20 @@ public class MainWindow extends AnchorPane {
     /** Injects the Duke instance */
     public void setFarquaad(Farquaad f) {
         this.farquaad = f;
+
+        // Show welcome
+        String welcome = farquaad.getWelcomeMessage();
+        dialogContainer.getChildren().add(
+                DialogBox.getDukeDialog(welcome, dukeImage)
+        );
+
+        // Show startup reminders, if any
+        String reminders = farquaad.getStartupRemindersMessage();
+        if (!reminders.isBlank()) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getDukeDialog(reminders, dukeImage)
+            );
+        }
     }
 
     /**

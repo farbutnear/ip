@@ -138,11 +138,27 @@ public class Ui {
         return message;
     }
 
+    /**
+     * Displays the tasks in a numbered format
+     *
+     * @param header The string of message to be shown before the list
+     * @param tasks The list of tasks to be formatted
+     */
     private String formatTaskList(String header, TaskList tasks) {
         StringBuilder sb = new StringBuilder(header + "\n");
         for (int i = 0; i < tasks.size(); i++) {
             sb.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
         }
         return sb.toString().trim();
+    }
+
+    /**
+     * Displays a message and returns it as a String
+     *
+     * @param message The message to be displayed
+     */
+    public String displayMessage(String message) {
+        System.out.println(message);
+        return message;
     }
 }

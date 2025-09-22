@@ -96,7 +96,7 @@ public class Storage {
                 } else if (t instanceof Task.Deadline) {
                     Task.Deadline d = (Task.Deadline) t;
                     writer.write(String.join(" | ",
-                            "D", done, d.getDescription(), d.getOriginalDay()));
+                            "D", done, d.getDescription(), d.getIsoDay()));
                 } else if (t instanceof Task.Event) {
                     Task.Event e = (Task.Event) t;
                     writer.write(
