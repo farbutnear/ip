@@ -31,13 +31,13 @@ public class FindCommand extends Command {
      * @param storage The storage handler (unused for find).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList matching = new TaskList();
         for (Task task : tasks.getTasks()) {
             if (task.getDescription().contains(keyword)) {
                 matching.add(task);
             }
         }
-        ui.displayMatchingTasks(matching);
+        return ui.displayMatchingTasks(matching);
     }
 }

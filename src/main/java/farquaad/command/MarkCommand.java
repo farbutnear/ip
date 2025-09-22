@@ -16,7 +16,7 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException {
         if (arguments.isEmpty()) {
             throw new InvalidIndexException();
@@ -35,7 +35,7 @@ public class MarkCommand extends Command {
 
         Task task = tasks.get(taskNo);
         task.markAsDone();
-        ui.displayTaskMarked(task);
         storage.save(tasks.getTasks());
+        return ui.displayTaskMarked(task);
     }
 }

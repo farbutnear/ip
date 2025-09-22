@@ -15,7 +15,7 @@ public class ToDoCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws FarquaadException, IOException {
         if (arguments.trim().isEmpty()) {
             throw new EmptyDescriptionException("todo");
@@ -23,7 +23,8 @@ public class ToDoCommand extends Command {
 
         Task todo = new Task.ToDo(arguments.trim());
         tasks.add(todo);
-        ui.displayTaskAdded(todo, tasks.size());
         storage.save(tasks.getTasks());
+        return ui.displayTaskAdded(todo, tasks.size());
+
     }
 }
