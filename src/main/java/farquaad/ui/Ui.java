@@ -9,7 +9,7 @@ import java.util.Scanner;
  * and displaying output messages.
  */
 public class Ui {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     /**
      * Creates a new UI instance with a scanner to read user input.
@@ -120,11 +120,7 @@ public class Ui {
      * @param tasks The {@code TaskList} containing tasks to display.
      */
     public String displayTaskList(TaskList tasks) {
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
-        }
-        String message = sb.toString().trim();
+        String message = formatTaskList("Here are the tasks in your list:", tasks);
         System.out.println(message);
         return message;
     }
@@ -135,17 +131,18 @@ public class Ui {
      * @param matchingTasks The list of matching tasks.
      */
     public String displayMatchingTasks(TaskList matchingTasks) {
-        String message;
-        if (matchingTasks.size() == 0) {
-            message = "No matching tasks found!";
-        } else {
-            StringBuilder sb = new StringBuilder("These are the matching tasks in your list:\n");
-            for (int i = 0; i < matchingTasks.size(); i++) {
-                sb.append((i + 1)).append(". ").append(matchingTasks.get(i)).append("\n");
-            }
-            message = sb.toString().trim();
-        }
+        String message = matchingTasks.size() == 0
+                ? "No matching tasks found!"
+                : formatTaskList("These are the matching tasks in your list:", matchingTasks);
         System.out.println(message);
         return message;
+    }
+
+    private String formatTaskList(String header, TaskList tasks) {
+        StringBuilder sb = new StringBuilder(header + "\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
+        }
+        return sb.toString().trim();
     }
 }
