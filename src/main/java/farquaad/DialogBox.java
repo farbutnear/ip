@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -36,6 +37,18 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        dialog.setWrapText(true);
+
+        // Added clipping for avatars with help of ChatGPT
+        displayPicture.setFitWidth(40.0);
+        displayPicture.setFitHeight(40.0);
+        displayPicture.setPreserveRatio(true);
+
+        Circle clip = new Circle();
+        clip.centerXProperty().bind(displayPicture.fitWidthProperty().divide(2));
+        clip.centerYProperty().bind(displayPicture.fitHeightProperty().divide(2));
+        clip.radiusProperty().bind(displayPicture.fitWidthProperty().divide(2));
+        displayPicture.setClip(clip);
     }
 
     /**
@@ -49,12 +62,17 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        // Added speech bubble with assistance from ChatGPT
+        db.dialog.getStyleClass().add("user-bubble");
+        return db;
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        // Added speech bubble with assistance from ChatGPT
+        db.dialog.getStyleClass().add("bot-bubble");
         return db;
     }
 }

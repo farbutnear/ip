@@ -31,7 +31,7 @@ public class Ui {
      * Displays a welcome message to the user.
      */
     public String displayGoodbye() {
-        String message = "Bye. Hope to see you again soon!";
+        String message = "Bye. Hope to not see you again soon!";
         System.out.println(message);
         return message;
     }
