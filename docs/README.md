@@ -1,7 +1,6 @@
 # Farquaad User Guide
 
-![Product Screenshot](docs/images/Farquaad.png)  
-*(Replace with an actual screenshot of your app running)*
+![Product Screenshot](Ui.png)  
 
 ---
 
