@@ -1,0 +1,55 @@
+/* Updated UI css with assistance from ChatGPT */
+
+/* Background */
+#mainAnchor {
+    -fx-background-color: linear-gradient(to bottom right, #d9e4f5, #f7f9fc);
+}
+
+/* Speech bubbles */
+.user-bubble {
+    -fx-background-color: #cce5ff;
+    -fx-background-radius: 15px 15px 0 15px;
+    -fx-padding: 10;
+}
+.bot-bubble {
+    -fx-background-color: #e2e2e2;
+    -fx-background-radius: 15px 15px 15px 0;
+    -fx-padding: 10;
+}
+
+/* Input and button */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 15;
+    -fx-padding: 8;
+}
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+}
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.anchor-pane {
+    -fx-background-color: #f4f6f9;  /* soft grey */
+}
+
+.dialog-box {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-padding: 8 12 8 12;
+}
+
+.scroll-pane {
+    -fx-background: #f4f6f9;
+    -fx-background-color: #f4f6f9;
+}
+
+.vbox {
+    -fx-background-color: #f4f6f9;
+}
+
